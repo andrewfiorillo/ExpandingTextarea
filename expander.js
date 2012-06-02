@@ -11,10 +11,11 @@
 			var style, prop;
 			if (window.getComputedStyle) {
 				var camelize = function (a, b) {
-						return b.toUpperCase();
+					return b.toUpperCase();
 				};
 				style = window.getComputedStyle(dom, null);
 				if (style) {
+					console.log(style);
 					var camel, val;
 					if (style.length) {
 						for (var i = 0, l = style.length; i < l; i++) {
@@ -34,12 +35,14 @@
 				}
 			}
 			if (style = dom.currentStyle) {
+				console.log(style);
 				for (prop in style) {
 					dest[prop] = style[prop];
 				}
 				return this.css(dest);
 			}
 			if (style = dom.style) {
+				console.log(style);
 				for (prop in style) {
 					if (typeof style[prop] != 'function') {
 						dest[prop] = style[prop];

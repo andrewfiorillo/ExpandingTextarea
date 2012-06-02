@@ -9,6 +9,9 @@
 			var dom = $(source).get(0);
 			var style;
 			var dest = {};
+			
+			console.log(dom);
+			
 			if(window.getComputedStyle) {
 				var camelize = function(a,b) {
 					return b.toUpperCase();
@@ -20,12 +23,18 @@
 					var val = style.getPropertyValue(prop);
 					dest[camel] = val;
 				};
+				
+				console.log(dest);
+				
 				return this.css(dest);
 			};
 			if(style == dom.currentStyle) {
 				for(var prop in style) {
 					dest[prop] = style[prop];
 				};
+				
+				console.log(dest);
+				
 				return this.css(dest);
 			};
 			if(style == dom.style) {
@@ -34,6 +43,9 @@
 						dest[prop] = style[prop];
 					};
 				};
+				
+				console.log(dest);
+				
 			};
 			return this.css(dest);
 		};
@@ -54,7 +66,9 @@
 
 			var	box = $('<div class="box"></div>');
 			
-			$(box).copyCSS(el).css({
+			$(box).copyCSS(el);
+			
+			$(box).css({
 				"height"		: "auto",
 				"position"   	: "absolute",
 				"visibility" 	: "hidden",

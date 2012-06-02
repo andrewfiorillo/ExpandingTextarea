@@ -22,13 +22,13 @@
 				};
 				return this.css(dest);
 			};
-			if(style = dom.currentStyle) {
+			if(style == dom.currentStyle) {
 				for(var prop in style) {
 					dest[prop] = style[prop];
 				};
 				return this.css(dest);
 		   };
-		   if(style = dom.style) {
+		   if(style == dom.style) {
 				for(var prop in style) {
 					if(typeof style[prop] != 'function') {
 						dest[prop] = style[prop];
@@ -64,7 +64,7 @@
 			
 			// Populate hidden div with text as you tpe and resize textarea based on height
 			
-			$(el).bind("input keyup", function() {
+			$(el).bind("input keydown keyup change", function() {
 				$(box).html(el.value.replace(/(\r\n|\r|\n)$/g,"<br /><br />").replace(/\r?\n|\r/g, "<br />"));
 				$(el).height($(box).height());
 			});

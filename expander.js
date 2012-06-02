@@ -5,51 +5,47 @@
 		// Get styles of textarea for reuse later
 		// 
 		
-		$.fn.copyCSS = function(source) {
+		$.fn.copyCSS = function (source) {
 			var dom = $(source).get(0);
-			var style;
 			var dest = {};
-			
-			console.log(dom);
-			
-			if(window.getComputedStyle) {
-				var camelize = function(a,b) {
-					return b.toUpperCase();
+			var style, prop;
+			if (window.getComputedStyle) {
+				var camelize = function (a, b) {
+						return b.toUpperCase();
 				};
 				style = window.getComputedStyle(dom, null);
-				for(var i = 0, l = style.length; i < l; i++) {
-					var prop = style[i];
-					var camel = prop.replace(/\-([a-z])/g, camelize);
-					var val = style.getPropertyValue(prop);
-					dest[camel] = val;
-				};
-				
-				console.log(dest);
-				
-				return this.css(dest);
-			};
-			if(style = dom.currentStyle) {
-				for(var prop in style) {
+				if (style) {
+					var camel, val;
+					if (style.length) {
+						for (var i = 0, l = style.length; i < l; i++) {
+							prop = style[i];
+							camel = prop.replace(/\-([a-z])/, camelize);
+							val = style.getPropertyValue(prop);
+							dest[camel] = val;
+						}
+					} else {
+						for (prop in style) {
+							camel = prop.replace(/\-([a-z])/, camelize);
+							val = style.getPropertyValue(prop) || style[prop];
+							dest[camel] = val;
+						}
+					}
+					return this.css(dest);
+				}
+			}
+			if (style = dom.currentStyle) {
+				for (prop in style) {
 					dest[prop] = style[prop];
-				};
-				
-				console.log(dest);
-				
+				}
 				return this.css(dest);
-			};
-			if(style = dom.style) {
-				for(var prop in style) {
-					if(typeof style[prop] != 'function') {
+			}
+			if (style = dom.style) {
+				for (prop in style) {
+					if (typeof style[prop] != 'function') {
 						dest[prop] = style[prop];
-					};
-				};
-				
-				console.log(dest);
-				
-			};
-			
-			console.log(dest);
-			
+					}
+				}
+			}
 			return this.css(dest);
 		};
 		

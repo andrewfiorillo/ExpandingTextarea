@@ -65,6 +65,8 @@
 
 			var	box = $('<div class="box"></div>');
 			
+			$(box).insertAfter(el);
+			
 			$(box).copyCSS(el);
 			
 			$(box).css({
@@ -73,7 +75,7 @@
 				"visibility" 	: "hidden",
 				"left"			: "-9999px",
 				"width" 		: $(el).width(),
-			}).insertAfter(el);;
+			});
 			
 			// Populate hidden div with text as you tpe and resize textarea based on height
 			

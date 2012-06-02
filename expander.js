@@ -23,12 +23,13 @@
 				return this.css(dest);
 			};
 			if(style == dom.currentStyle) {
+				console.log(style);
 				for(var prop in style) {
 					dest[prop] = style[prop];
 				};
 				return this.css(dest);
-		   };
-		   if(style == dom.style) {
+			};
+			if(style == dom.style) {
 				for(var prop in style) {
 					if(typeof style[prop] != 'function') {
 						dest[prop] = style[prop];

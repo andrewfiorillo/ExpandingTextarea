@@ -37,7 +37,7 @@
 			if (style = dom.currentStyle) {
 				console.log(style);
 				console.log("this: " + this);
-				for (prop in style) {
+				for (var prop in style) {
 					console.log(prop + ": " + style[prop]);
 					dest[prop] = style[prop];
 				}

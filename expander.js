@@ -36,8 +36,12 @@
 			}
 			if (style = dom.currentStyle) {
 				console.log(style);
-				
-				$(this).css(style);
+				console.log("this: " + this);
+				for (prop in style) {
+					console.log(prop + ": " + style[prop]);
+					dest[prop] = style[prop];
+				}
+				return this.css(dest);
 			}
 			if (style = dom.style) {
 				console.log(style);

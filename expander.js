@@ -23,7 +23,6 @@
 				return this.css(dest);
 			};
 			if(style == dom.currentStyle) {
-				console.log(style);
 				for(var prop in style) {
 					dest[prop] = style[prop];
 				};

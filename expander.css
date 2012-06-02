@@ -1,0 +1,35 @@
+body {
+	background: #f6f6f6;
+	text-align: center;
+	font-family: helvetica, arial, sans-serif;
+	font-size: 13px;
+	color: #333;
+	padding: 20px;
+}
+textarea {
+	background: #fff;
+	width: 30%;
+	max-width: 500px;
+	height: 20px;
+	min-height: 20px;
+	padding: 5px 8px;
+	margin: 10px auto;
+	border: 1px solid #ccc;
+	border-top: 1px solid #bbb;
+	font-family: helvetica, arial, sans-serif;
+	font-size: 13px;
+	color: #333;
+	line-height: 20px;
+	word-wrap: break-word;
+	white-space: pre-wrap;
+	display: block;
+	outline: none;
+	resize: both;
+	box-shadow: 0 1px 1px rgba(0,0,0,0.075) inset, 0 1px 0 white;
+}​
+::-webkit-input-placeholder {
+	color: #bbb;
+}
+:-moz-placeholder {
+	color: #bbb;
+}

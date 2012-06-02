@@ -15,7 +15,6 @@
 				};
 				style = window.getComputedStyle(dom, null);
 				if (style) {
-					console.log(style);
 					var camel, val;
 					if (style.length) {
 						for (var i = 0, l = style.length; i < l; i++) {
@@ -35,16 +34,26 @@
 				}
 			}
 			if (style = dom.currentStyle) {
-				console.log(style);
-				console.log("this: " + this);
-				for (var prop in style) {
-					console.log(prop + ": " + style[prop]);
-					dest[prop] = style[prop];
+				if (style) {
+					var camel, val;
+					if (style.length) {
+						for (var i = 0, l = style.length; i < l; i++) {
+							prop = style[i];
+							camel = prop.replace(/\-([a-z])/, camelize);
+							val = style.getPropertyValue(prop);
+							dest[camel] = val;
+						}
+					} else {
+						for (prop in style) {
+							camel = prop.replace(/\-([a-z])/, camelize);
+							val = style.getPropertyValue(prop) || style[prop];
+							dest[camel] = val;
+						}
+					}
+					return this.css(dest);
 				}
-				return this.css(dest);
 			}
 			if (style = dom.style) {
-				console.log(style);
 				for (prop in style) {
 					if (typeof style[prop] != 'function') {
 						dest[prop] = style[prop];

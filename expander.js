@@ -58,6 +58,7 @@
 				"height"		: "auto",
 				"position"   	: "absolute",
 				"visibility" 	: "hidden",
+				"left"			: "-9999px",
 				"width" 		: $(el).width(),
 			}).insertAfter(el);;
 			

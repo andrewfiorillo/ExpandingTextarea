@@ -1,57 +1,41 @@
 (function( $ ){
+	
+	$.fn.getStyleObject = function(){
+		var dom = this.get(0);
+		var style;
+		var returns = {};
+		if(window.getComputedStyle){
+			var camelize = function(a,b){
+				return b.toUpperCase();
+			}
+			style = window.getComputedStyle(dom, null);
+			for(var i = 0, l = style.length; i < l; i++){
+				var prop = style[i];
+				var camel = prop.replace(/\-([a-z])/, camelize);
+				var val = style.getPropertyValue(prop);
+				returns[camel] = val;
+			}
+			return returns;
+		}
+		// if(dom.currentStyle){
+		// 	style = dom.currentStyle;
+		// 	for(var prop in style){
+		// 		returns[prop] = style[prop];
+		// 	}
+		// 	return returns;
+		// }
+		if(style = dom.style){
+			for(var prop in style){
+				if(typeof style[prop] != 'function'){
+					returns[prop] = style[prop];
+				}
+			}
+			return returns;
+		}
+		return returns;
+	}
 
 	$.fn.expander = function() {
-		
-		// Get styles of textarea for reuse later
-		// 
-		
-		$.fn.copyCSS = function (source) {
-			var dom = $(source).get(0);
-			var dest = {};
-			var style, prop;
-			var camelize = function (a, b) {
-					return b.toUpperCase();
-				};
-			if (window.getComputedStyle) {
-				style = window.getComputedStyle(dom, null);
-				if (style) {
-					var camel, val;
-					if (style.length) {
-						for (var i = 0, l = style.length; i < l; i++) {
-							prop = style[i];
-							camel = prop.replace(/\-([a-z])/, camelize);
-							val = style.getPropertyValue(prop);
-							dest[camel] = val;
-						}
-					} else {
-						for (prop in style) {
-							camel = prop.replace(/\-([a-z])/, camelize);
-							val = style.getPropertyValue(prop) || style[prop];
-							dest[camel] = val;
-						}
-					}
-					return this.css(dest);
-				}
-			}
-			if (style = dom.currentStyle) {
-				var camel, val;
-				for (prop in style) {
-					//dest[prop] = style[prop];
-					camel = prop.replace(/\-([a-z])/, camelize);
-					val = style.getPropertyValue(prop) || style[prop];
-					dest[camel] = val;
-				}
-				return this.css(dest);
-			}
-			if (style = dom.style) {
-				for (prop in style) {
-					if (typeof style[prop] != 'function') {
-						dest[prop] = style[prop];
-					}
-				}
-			}
-			return this.css(dest);
-		};
 		
 		// Set up expanding for each element
 		
@@ -62,24 +46,24 @@
 			$(el).css({
 				"resize" 		: "none",
 				"word-wrap"		: "break-word",
-				"white-space"	: "pre-wrap"
+				"white-space"	: "pre-wrap",
 			});
 						
 			// Create hidden div with all the same styles as textarea, plus a few extra needed things
 
-			var	box = $('<div class="box"></div>');
+			var	box = $('<div class="box"></div>'),
+				styles = $(el).getStyleObject();
 			
-			$(box).insertAfter(el);
-			
-			$(box).copyCSS(el);
-			
-			$(box).css({
+			$(box).css(styles).css({
 				"height"		: "auto",
 				"position"   	: "absolute",
 				"visibility" 	: "hidden",
 				"left"			: "-9999px",
 				"width" 		: $(el).width(),
-			});
+				"line-height"	: $(el).css("line-height"),
+				"font-size"		: $(el).css("font-size"),
+				"font-family"	: $(el).css("font-family")
+			}).insertAfter(el);
 			
 			// Populate hidden div with text as you tpe and resize textarea based on height
 			

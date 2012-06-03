@@ -16,8 +16,7 @@
 						
 			// Create hidden div with all the same styles as textarea, plus a few extra needed things
 
-			var	box = $('<div class="box"></div>'),
-				styles = {};
+			var	box = $('<div class="box"></div>'), styles = {};
 			
 			if(window.getComputedStyle){
 				var camelize = function(a,b){ return b.toUpperCase(); }
@@ -41,22 +40,19 @@
 				}
 			}
 			
-			$(box).css(styles)
-			
-			$(box).css({
+			$(box).css(styles).css({
 				"height"		: "auto",
 				"position"   	: "absolute",
 				"visibility" 	: "hidden",
 				"left"			: "-9999px",
 				"width" 		: $(el).width()
-			});
-			
-			$(box).insertAfter(el);
+			}).insertAfter(el);
 			
 			// Populate hidden div with text as you tpe and resize textarea based on height
 			
 			$(el).bind("input keydown keyup change", function() {
-				$(box).html(el.value.replace(/(\r\n|\r|\n)$/g,"<br /><br />|").replace(/\r?\n|\r/g, "<br />|"));
+				if ($.browser.msie && $.browser.version <= 7) $(box).html(el.value.replace(/(\r\n|\r|\n)$/g,"<br /><br />|").replace(/\r?\n|\r/g, "<br />|"));
+				else $(box).html(el.value.replace(/(\r\n|\r|\n)$/g,"<br /><br />").replace(/\r?\n|\r/g, "<br />"));
 				$(el).height($(box).height());
 			});
 			

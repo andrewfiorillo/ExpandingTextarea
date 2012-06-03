@@ -1,39 +1,4 @@
 (function( $ ){
-	
-	$.fn.getStyleObject = function(){
-		var dom = this.get(0);
-		var style;
-		var returns = {};
-		if(window.getComputedStyle){
-			var camelize = function(a,b){
-				return b.toUpperCase();
-			}
-			style = window.getComputedStyle(dom, null);
-			for(var i = 0, l = style.length; i < l; i++){
-				var prop = style[i];
-				var camel = prop.replace(/\-([a-z])/, camelize);
-				var val = style.getPropertyValue(prop);
-				returns[camel] = val;
-			}
-			return returns;
-		}
-		// if(dom.currentStyle){
-		// 	style = dom.currentStyle;
-		// 	for(var prop in style){
-		// 		returns[prop] = style[prop];
-		// 	}
-		// 	return returns;
-		// }
-		if(style = dom.style){
-			for(var prop in style){
-				if(typeof style[prop] != 'function'){
-					returns[prop] = style[prop];
-				}
-			}
-			return returns;
-		}
-		return returns;
-	}
 
 	$.fn.expander = function() {
 		
@@ -46,15 +11,27 @@
 			$(el).css({
 				"resize" 		: "none",
 				"word-wrap"		: "break-word",
-				"white-space"	: "pre-wrap",
+				"white-space"	: "pre-wrap"
 			});
 						
 			// Create hidden div with all the same styles as textarea, plus a few extra needed things
 
-			var	box = $('<div class="box"></div>'),
-				styles = $(el).getStyleObject();
+			var	box = $('<div class="box"></div>');
 			
-			$(box).css(styles).css({
+			if(window.getComputedStyle){
+				var camelize = function(a,b){ return b.toUpperCase(); }
+				var returns = {};
+				var style = window.getComputedStyle(el, null);
+				for(var i = 0, l = style.length; i < l; i++){
+					var prop = style[i];
+					var camel = prop.replace(/\-([a-z])/, camelize);
+					var val = style.getPropertyValue(prop);
+					returns[camel] = val;
+				}
+				$(box).css(returns);
+			}
+			
+			$(box).css({
 				"height"		: "auto",
 				"position"   	: "absolute",
 				"visibility" 	: "hidden",

@@ -22,7 +22,7 @@
 				toDash    = function(str) { return str.replace(/([A-Z])/g, function($1){return "-"+$1.toLowerCase();}); };
 			
 			if(window.getComputedStyle){
-				var style =style = window.getComputedStyle(el, null);
+				var style = window.getComputedStyle(el, null);
 				for(var i = 0, l = style.length; i < l; i++){
 					var prop = style[i];
 					var camel = prop.replace(re, camelize);

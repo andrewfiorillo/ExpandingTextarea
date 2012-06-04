@@ -7,19 +7,19 @@
 			// Set requisite styles on textarea to make this work
 			
 			$(el).css({
-				"resize" 		: "none",
-				"word-wrap"		: "break-word",
-				"white-space"	: "pre-wrap",
-				"overflow"		: "hidden"
+				"resize"      : "none",
+				"word-wrap"   : "break-word",
+				"white-space" : "pre-wrap",
+				"overflow"    : "hidden"
 			});
 						
 			// Create hidden div with all the same styles as textarea, plus a few extra needed things
 
-			var	box			= $('<div class="box"></div>'),
-				styles		= {},
-				re			= /(\-([a-z]){1})/g,
-				camelize	= function(a,b){ return b.toUpperCase(); },
-				toDash		= function(str) { return str.replace(/([A-Z])/g, function($1){return "-"+$1.toLowerCase();}); };
+			var	box       = $('<div class="box"></div>'),
+				styles    = {},
+				re        = /(\-([a-z]){1})/g,
+				camelize  = function(a,b){ return b.toUpperCase(); },
+				toDash    = function(str) { return str.replace(/([A-Z])/g, function($1){return "-"+$1.toLowerCase();}); };
 			
 			if(window.getComputedStyle){
 				var style =style = window.getComputedStyle(el, null);
@@ -40,12 +40,11 @@
 			}
 			
 			$(box).css(styles).css({
-				"height"		: "auto",
-				"position"   	: "absolute",
-				"visibility" 	: "hidden",
-				"left"			: "-9999px",
-				"margin"		: $(el).css("margin"),
-				"width" 		: $(el).width()
+				"height"     : "auto",
+				"position"   : "absolute",
+				"visibility" : "hidden",
+				"left"       : "-9999px",
+				"width"      : $(el).width()
 			}).insertAfter(el);
 			
 			// Populate hidden div with text as you tpe and resize textarea based on height

@@ -1,8 +1,6 @@
-#Expanding texareas
+#Expanding textareas
 
 This is a plugin for jQuery that makes textareas expand as you type, with an emphasis on speed/responsiveness. Also, it handles textareas with percentage widths that might change size for whatever reason. This might be handy for responsive design, when the browser window is resized, or if there is an orientation change on a phone or tablet.
-
-NOTE: This is unfinished and not yet fully cross-browser tested.
 
 ##Usage
 

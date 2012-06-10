@@ -1,6 +1,20 @@
-(function( $ ){
+(function($){
 
 	$.fn.expander = function() {
+				
+		var re     = /(\-([a-z]){1})/g,
+			br     = "<br />",
+			breaks = "<br /><br />";
+		
+		function camelize(a,b) {
+			return b.toUpperCase();
+		}
+		
+		function toDash(str) {
+			return str.replace(re, function(s) {
+				return "-" + s.toLowerCase() 
+			});
+		}
 		
 		this.each(function(i,el) {
 			
@@ -8,25 +22,26 @@
 			
 			$(el).css({
 				"resize"      : "none",
-				"word-wrap"   : "break-word",
+				"overflow"    : "hidden",
+				"white-space" : "pre",
 				"white-space" : "pre-wrap",
-				"overflow"    : "hidden"
+				"white-space" : "-moz-pre-wrap",
+				"white-space" : "-pre-wrap",
+				"white-space" : "-o-pre-wrap",
+				"word-wrap"   : "break-word"
 			});
 						
 			// Create hidden div with all the same styles as textarea, plus a few extra needed things
 
-			var	box       = $('<div class="box"></div>'),
-				styles    = {},
-				re        = /(\-([a-z]){1})/g,
-				camelize  = function(a,b){ return b.toUpperCase(); },
-				toDash    = function(str) { return str.replace(/([A-Z])/g, function($1){return "-"+$1.toLowerCase();}); };
+			var	box    = $('<pre class="box"></pre>'),
+				styles = {};
 			
-			if(window.getComputedStyle){
+			if (window.getComputedStyle) {
 				var style = window.getComputedStyle(el, null);
-				for(var i = 0, l = style.length; i < l; i++){
-					var prop = style[i];
+				for (var i = 0, l = style.length; i < l; i++) {
+					var prop  = style[i];
 					var camel = prop.replace(re, camelize);
-					var val = style.getPropertyValue(prop);
+					var val   = style.getPropertyValue(prop);
 					styles[camel] = val;
 				}
 			}
@@ -49,16 +64,15 @@
 			
 			// Populate hidden div with text as you tpe and resize textarea based on height
 			
-			var grow = function() {
-				var value = el.value.replace(/</g,"&lt;").replace(/>/g,"&gt;");
-				if ($.browser.msie && $.browser.version <= 7)
-					 $(box).html(value.replace(/(\r\n|\r|\n)$/g,"<br /><br />|").replace(/\r?\n|\r/g, "<br />|"));
-				else $(box).html(value.replace(/(\r\n|\r|\n)$/g,"<br /><br />").replace(/\r?\n|\r/g, "<br />"));
+			function grow() {	
+				var value = el.value;
+				value = value.replace(/</g,"&lt;").replace(/>/g,"&gt;");
+				value = value.replace(/(\r\n|\r|\n)$/g, breaks);
+				value = value.replace(/\r?\n|\r/g, br);
+				$(box).html(value);
 				$(el).height($(box).height());
-			};
-			
+			}
 			$(el).bind("input keydown keyup change", grow);
-			
 			grow();
 			
 			// In case the textarea is fluid and window gets resized 

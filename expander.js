@@ -5,6 +5,11 @@
 		var re     = /(\-([a-z]){1})/g,
 			br     = "<br />",
 			breaks = "<br /><br />";
+			
+		if ($.browser.msie && $.browser.version <= 7) {
+			br     = "<br />|",
+			breaks = "<br /><br />|";
+		}
 		
 		function camelize(a,b) {
 			return b.toUpperCase();
@@ -28,7 +33,8 @@
 				"white-space" : "-moz-pre-wrap",
 				"white-space" : "-pre-wrap",
 				"white-space" : "-o-pre-wrap",
-				"word-wrap"   : "break-word"
+				"word-wrap"   : "break-word",
+				"min-height"  : $(el).height()
 			});
 						
 			// Create hidden div with all the same styles as textarea, plus a few extra needed things

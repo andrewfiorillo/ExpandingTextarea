@@ -7,7 +7,7 @@
 			breaks = "<br /><br />";
 			
 		if ($.browser.msie && $.browser.version <= 7) {
-			br     = "<br />|",
+			br     = "<br />|";
 			breaks = "<br /><br />|";
 		}
 		
